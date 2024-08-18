@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 from fastapi import FastAPI
 import uvicorn
 
@@ -12,8 +13,6 @@ class Gender(str,  Enum):
 @app.get('/')
 async def read_root():
     return {'message': 'This is root address!'}
-
-
 
 @app.get('/helloworld')
 async def read_root():
@@ -35,10 +34,22 @@ async def get_user(gender: Gender):
 
 # 建造查詢項目page_index & page_size
 @app.get('/users')
-async def get_users(page_index: int, page_size: int): 
+async def get_users(page_index: int, page_size: Optional[int] = 30): 
     return {'page info': f'index: {page_index}, size: {page_size}'}
 
+# 獲取某一個用戶的所有的朋友 /users/{user_id} ＝> 這個人的id api正常設計手段 
+# 只要下面定義函數中的路徑沒有被路徑參數中定義 就是屬於查詢參數  
+@app.get('/users/{user_id}/friends')
+async def get_friends(page_index: int, user_id: int, page_size: Optional[int]= 10):
+    return {'user_friends': f'user_id: {user_id}, indexL: {page_index}, pageSize: {page_size}'}
 
+# 作業
+@app.get('/users/{useri_id}/friends/{friend_id}')
+async def get_friend_gender(user_id: int, friend_id: int, gender: Optional[Gender]= None):
+    if gender is None:
+        return {'friend_info': f'user_id: {user_id}, friend_id: {friend_id}, gender: Not specified'}
+    else:
+        return {'friend_info': f'user_id: {user_id}, friend_id: {friend_id}, gender: {gender.value}'}
 # 修正不要寫 uvicorn helloworld:app -reload
 if __name__ == '__main__':
     uvicorn.run(app="app:app", reload=True )
