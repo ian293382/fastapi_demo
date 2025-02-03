@@ -5,5 +5,8 @@
 4. pip install -r requirements.txt # 這邊會報錯通常沒有update 或有些指令去執行啊
 
 <!-- 啟用伺服器 在 helloworld.py 這個文件下的 app object 去做物件加載  -->
-5. uvicorn 高校伺服器 => $ uvicorn helloworld:app -reload
+5. uvicorn service => $ uvicorn helloworld:app -reload
 
+
+
+====此後被我拿去做成CI/CD demo

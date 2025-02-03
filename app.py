@@ -50,6 +50,7 @@ async def get_friend_gender(user_id: int, friend_id: int, gender: Optional[Gende
         return {'friend_info': f'user_id: {user_id}, friend_id: {friend_id}, gender: Not specified'}
     else:
         return {'friend_info': f'user_id: {user_id}, friend_id: {friend_id}, gender: {gender.value}'}
-# 修正不要寫 uvicorn helloworld:app -reload
+
+# 修正後可以不用再寫 uvicorn helloworld:app -reload
 if __name__ == '__main__':
     uvicorn.run(app="app:app", reload=True )
